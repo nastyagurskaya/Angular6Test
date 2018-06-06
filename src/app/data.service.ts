@@ -8,15 +8,15 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
   getUsers() {
-    return this.http.get('https://jsonplaceholder.typicode.com/users')
+    return this.http.get('https://localhost:44330/api/users')
   }
   getUser(UsId) {
-    return this.http.get('https://jsonplaceholder.typicode.com/users/'+UsId)
+    return this.http.get('https://localhost:44330/api/users/'+UsId)
   }
   getPosts() {
-    return this.http.get('https://jsonplaceholder.typicode.com/posts')
+    return this.http.get('https://localhost:44330/api/posts')
   }
   getPostsByUsId(UsId) {
-    return this.http.get('https://jsonplaceholder.typicode.com/posts?userId='+UsId)
+    return this.http.get('https://localhost:44330/api/users/'+UsId+'/posts')
   }
 }
