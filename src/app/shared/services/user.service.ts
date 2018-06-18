@@ -7,14 +7,10 @@ import { ConfigService } from '../utils/config.service';
 import {BaseService} from "./base.service";
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-//import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs';
 
 // Add the RxJS Observable operators we need in this app.
-//import '../../rxjs-operators';
-//import { Observable } from "rxjs";
-//import { map } from "rxjs/operators";
-//import { map } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -48,21 +44,20 @@ export class UserService extends BaseService {
    
   }  
 
-  /*login(userName, password) {
+  login(userName, password): Observable<boolean> {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-
+    let body = JSON.stringify({ userName, password });
+    let options = new RequestOptions({ headers: headers });
     return this.http.post(this.baseUrl + '/auth/login',
-      JSON.stringify({ userName, password }),{ headers }
-      ).pipe(map(res => res.json())
-      .map(res => {
+      body , options).pipe(map(res => res.json()), map(res => {
         localStorage.setItem('auth_token', res.auth_token);
         this.loggedIn = true;
         this._authNavStatusSource.next(true);
         return true;
-      })
-      .catch(this.handleError);
-  }*/
+      }),map(res=>true),
+      catchError(this.handleError));
+  }
 
   logout() {
     localStorage.removeItem('auth_token');

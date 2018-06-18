@@ -8,7 +8,7 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
   getUsers() {
-    return this.http.get('https://localhost:44330/api/users')
+    return this.http.get('http://localhost:6100/api/users')
   }
   getUser(UsId) {
     return this.http.get('https://localhost:44330/api/users/'+UsId)

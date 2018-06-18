@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { AuthGuard } from '../app/auth.guard';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -10,12 +10,12 @@ import { DetailsComponent } from './details/details.component';
 import { HttpClientModule } from '@angular/common/http';
 import { Http, HttpModule, XHRBackend } from '@angular/http';
 import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
-
+import { UserboardModule }  from './userboard/userboard.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SpinnerComponent } from './spinner/spinner.component';
 import { AccountModule }  from './account/account.module';
 import { FormsModule }   from '@angular/forms';
 import { ConfigService } from './shared/utils/config.service';
+import { ColorPickerModule } from "ngx-color-picker";
 import {RegistrationFormComponent} from './account/registration-form/registration-form.component'
 @NgModule({
   declarations: [
@@ -24,8 +24,6 @@ import {RegistrationFormComponent} from './account/registration-form/registratio
     PostsComponent,
     UsersComponent,
     DetailsComponent,
-    SpinnerComponent
-    //RegistrationFormComponent
   ],
   imports: [
     BrowserModule,
@@ -34,12 +32,15 @@ import {RegistrationFormComponent} from './account/registration-form/registratio
     BrowserAnimationsModule,
     FormsModule,
     AccountModule,
-    HttpModule
+    HttpModule,
+    UserboardModule,
+    ColorPickerModule
   ],
+  exports:[ColorPickerModule],
   providers: [ConfigService, { 
     provide: XHRBackend, 
     useClass: AuthenticateXHRBackend
-  }],
+  },AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

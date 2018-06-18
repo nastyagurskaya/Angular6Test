@@ -4,10 +4,11 @@ import { UsersComponent } from './users/users.component';
 import { DetailsComponent } from './details/details.component';
 import { PostsComponent } from './posts/posts.component';
 import { RegistrationFormComponent } from './account/registration-form/registration-form.component';
+import { AuthGuard } from '../app/auth.guard';
 const routes: Routes = [
   {
   path: '',
-    component: UsersComponent
+    component: UsersComponent, canActivate: [AuthGuard]
 },
 {
   path: 'details/:id',
@@ -21,6 +22,7 @@ const routes: Routes = [
   path: 'registration',
   component: RegistrationFormComponent
 },
+
 ];
 
 @NgModule({

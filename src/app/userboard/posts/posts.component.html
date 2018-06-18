@@ -1,0 +1,19 @@
+<!-- <div *ngIf="userPosts">
+    <div class="row">
+      <div class="col-md-6 col-sm-3">
+      <p><strong>Name:</strong> {{userPosts.name}}</p>
+        <p ><strong>Phone:</strong> {{userDetails.phone}}</p>
+      </div>
+    </div>
+    </div>  -->
+    <div> <a class="nav-link" href="#" routerLinkActive="active" routerLink="/userboard/posts/create">Create</a></div>
+    <div *ngIf="userPosts">
+    <ul [@listStagger]="userPosts">
+      <li *ngFor="let post of userPosts">
+          <div> <a class="nav-link" href="#" routerLinkActive="active" routerLink="/userboard/posts/edit/{{post.id}}" >Edit</a></div>
+          <div><a class="nav-link" href="#" routerLinkActive="active" routerLink="/userboard/posts"  (click)="openDialog(post.id)">Delete</a></div>
+        <p><strong>{{post.title }}</strong></p> 
+              <p>{{post.body }}</p> 
+      </li>
+    </ul></div>
+    

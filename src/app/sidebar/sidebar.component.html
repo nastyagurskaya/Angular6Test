@@ -1,19 +1,32 @@
 <nav>
   <ul>
-    <li>
-      <a routerLink="" [class.activated]="currentUrl == '/'">
+    <li *ngIf="status">
+      <a routerLink="/userboard/home" [class.activated]="currentUrl == '/userboard/home'">
         <i class="material-icons">supervised_user_circle</i>
       </a>
     </li>
-    <li>
-        <a routerLink="posts" [class.activated]="currentUrl == '/posts'">
+    
+    <div *ngIf="status; else elseBlock"></div>
+  <ng-template #elseBlock><li><a routerLink="login" [class.activated]="currentUrl == '/login'">
+  <i class="material-icons">face</i>
+  </a></li>
+  <li>
+      <a routerLink="registration" [class.activated]="currentUrl == '/registration'">
+        <i class="material-icons">person_add</i>
+      </a>
+    </li>
+  </ng-template>
+
+    <li *ngIf="status">
+        <a routerLink="/userboard/posts" [class.activated]="currentUrl == '/userboard/posts'">
           <i class="material-icons">message</i>
         </a>
       </li>
-      <li>
-        <a routerLink="registration" [class.activated]="currentUrl == '/registration'">
-          <i class="material-icons">message</i>
-        </a>
-      </li>
+      
+      <li *ngIf="status">
+          <a routerLink="registration" (click)="logout()">
+            <i class="material-icons">clear</i>
+          </a>
+        </li>
   </ul>
 </nav>
