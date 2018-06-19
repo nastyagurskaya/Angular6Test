@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 
 import { UserDetails } from '../models/home.details.interface'; 
-import { UserPosts } from '../models/home.user.posts.interface'; 
 import { Post } from '../models/post'; 
 import { ConfigService } from '../../shared/utils/config.service';
 
@@ -38,9 +37,29 @@ export class UserboardService extends BaseService {
     let authToken = localStorage.getItem('auth_token');
     headers.append('Authorization', `Bearer ${authToken}`);
 
-  return this.http.get(this.baseUrl + "/users/posts",{headers})
+  return this.http.get(this.baseUrl + "/posts",{headers})
     .pipe(map(response => response.json()))
     .catch(this.handleError);
+}
+getHomeCheckPosts(){
+  let headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  let authToken = localStorage.getItem('auth_token');
+  headers.append('Authorization', `Bearer ${authToken}`);
+
+return this.http.get(this.baseUrl + "/checkposts",{headers})
+  .pipe(map(response => response.json()))
+  .catch(this.handleError);
+}
+getCheckItems(){
+  let headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  let authToken = localStorage.getItem('auth_token');
+  headers.append('Authorization', `Bearer ${authToken}`);
+
+return this.http.get(this.baseUrl + "/checkposts/checkitems",{headers})
+  .pipe(map(response => response.json()))
+  .catch(this.handleError);
 }
 getEditedPost(idPost): Observable<Post> {
   let headers = new Headers();
@@ -52,21 +71,30 @@ return this.http.get(this.baseUrl + "/posts/"+idPost,{headers})
   .pipe(map(response => response.json()))
   .catch(this.handleError);
 }
-deletePost(idPost) : Observable<boolean>{
+deletePost(idPost) {
   let headers = new Headers();
   headers.append('Content-Type', 'application/json');
   let authToken = localStorage.getItem('auth_token');
   headers.append('Authorization', `Bearer ${authToken}`);
  console.log('Post was deleted from delete method');
-return this.http.delete(this.baseUrl + "/posts/delete/" + idPost,{headers}).pipe(map(response => true))
+return this.http.delete(this.baseUrl + "/posts/" + idPost,{headers}).pipe(map(res => true))
   .catch(this.handleError);
 }
-updatePost(id, title, body): Observable<boolean> {
+deleteCheckPost(idPost) {
   let headers = new Headers();
   headers.append('Content-Type', 'application/json');
   let authToken = localStorage.getItem('auth_token');
   headers.append('Authorization', `Bearer ${authToken}`);
-  let bodyP = JSON.stringify({ id, title, body });
+ console.log('Post was deleted from delete method');
+return this.http.delete(this.baseUrl + "/checkposts/" + idPost,{headers}).pipe(map(res => true))
+  .catch(this.handleError);
+}
+updatePost(id, title, body, color): Observable<boolean> {
+  let headers = new Headers();
+  headers.append('Content-Type', 'application/json');
+  let authToken = localStorage.getItem('auth_token');
+  headers.append('Authorization', `Bearer ${authToken}`);
+  let bodyP = JSON.stringify({ id, title, body, color });
   return this.http.post(this.baseUrl + "/posts/update", bodyP, {headers}).pipe(map(res => true),
   catchError(this.handleError));
 }

@@ -18,8 +18,10 @@
                   <input *ngIf="post" [(ngModel)]="post.body" placeholder="{{post.body}}" [ngModelOptions]="{standalone: true}">
                   <!-- <input type="text" class="form-control" id="body" placeholder="{{ post.body }}"  value="{{ post.body }}" name="Body" tmFocus ngModel>-->
               </div>
+              <div><label for="color">Color </label> 
+                <input *ngIf="post" type="text" name="color"  id="post.color" value="{{post.color}}" [(colorPicker)]="post.color"  [style.background]="post.color" ngModel ></div>
               <div class="form-group">
-                  <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Update</button>
+                  <button type="submit" class="btn btn-light" [disabled]="f.invalid || isRequesting">Update</button>
                   <app-spinner> [isRunning]="isRequesting"></app-spinner> 
               </div>
               <div *ngIf="errors" class="alert alert-danger" role="alert">

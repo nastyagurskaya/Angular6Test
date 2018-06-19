@@ -6,14 +6,45 @@
       </div>
     </div>
     </div>  -->
-    <div> <a class="nav-link" href="#" routerLinkActive="active" routerLink="/userboard/posts/create">Create</a></div>
+    <h2><strong>Your posts</strong></h2>
+    <div><strong>Search: </strong>
+
+<input #inp name="value"  id="value" placeholder="Item name..." [(ngModel)]="name" (input)="filterItem(inp.value)">
+    <!-- <button type="button" class="btn btn-outline-light" (click)="searchClick()"> <i class="material-icons" style="font-size: 22px">search</i></button></div> -->
+    <div align="right"> <a class="nav-link" href="#" routerLinkActive="active" routerLink="/userboard/posts/create"><span style="vertical-align:top;">Create</span><i class="material-icons">add</i></a></div>
     <div *ngIf="userPosts">
     <ul [@listStagger]="userPosts">
-      <li *ngFor="let post of userPosts">
-          <div> <a class="nav-link" href="#" routerLinkActive="active" routerLink="/userboard/posts/edit/{{post.id}}" >Edit</a></div>
-          <div><a class="nav-link" href="#" routerLinkActive="active" routerLink="/userboard/posts"  (click)="openDialog(post.id)">Delete</a></div>
-        <p><strong>{{post.title }}</strong></p> 
-              <p>{{post.body }}</p> 
+      <li *ngFor="let post of userPosts"  [style.background]="post.color">
+          <p><strong style=" font-size: 1.5em;" >{{post.title }}</strong> <br>
+            {{post.body }}</p> 
+          <p align="right"> <a class="nav-link" href="#" routerLinkActive="active" routerLink="/userboard/posts/edit/{{post.id}}" >  <i class="material-icons">edit</i></a>
+            <a class="nav-link" href="#" routerLinkActive="active" routerLink="/userboard/posts"  (click)="openDialog(post)"> <i class="material-icons">delete</i></a>
+          </p>      
       </li>
-    </ul></div>
-    
+    </ul>
+  </div>
+  <h2><strong>Your CheckLists</strong></h2>
+  <!-- <div align="right"> <a class="nav-link" href="#" routerLinkActive="active" routerLink="/userboard/posts/create"><span style="vertical-align:top;">Create</span><i class="material-icons">add</i></a></div> -->
+  <div *ngIf="userCheckPosts">
+  <ul [@listStagger]="userCheckPosts">
+  <li *ngFor="let chpost of userCheckPosts"  [style.background]="chpost.color">
+      <!-- <p align="right"> <a class="nav-link" href="#" routerLinkActive="active" routerLink="/userboard/posts/edit/{{post.id}}" >  <i class="material-icons">edit</i></a> -->
+        <a class="nav-link" href="#" routerLinkActive="active"  (click)="openDialog(chpost)"> <i class="material-icons">delete</i></a>
+      <!-- </p>  -->
+        <p><strong style=" font-size: 1.5em;" >{{chpost.title }}</strong> <br>
+          </p>
+          
+          <ul> <li *ngFor="let item of userCheckItems" [style.background]="chpost.color">
+            
+              <div *ngIf="chpost.id == item.checkListPostId"> 
+                  <p *ngIf="item.checked==true"><span style="vertical-align:top;">{{ item.body }} </span><i class="material-icons">done</i></p>
+                <p *ngIf="item.checked==false"><span style="vertical-align:top;">{{ item.body }}</span></p> 
+              </div> 
+              </li>
+            </ul>
+        <!-- <p align="right"> <a class="nav-link" href="#" routerLinkActive="active" routerLink="/userboard/posts/edit/{{post.id}}" >  <i class="material-icons">edit</i></a>
+          <a class="nav-link" href="#" routerLinkActive="active" routerLink="/userboard/posts"  (click)="openDialog(post.id)"> <i class="material-icons">delete</i></a>
+        </p>       -->
+    </li>
+  </ul>
+</div>

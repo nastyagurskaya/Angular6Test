@@ -32,7 +32,7 @@ export class EditComponent implements OnInit {
     this.submitted = true;
     this.isRequesting = true;
     this.errors='';
-      this.userService.updatePost(this.postId, this.post.title, this.post.body)
+      this.userService.updatePost(this.postId, this.post.title, this.post.body, this.post.color)
         .pipe(finalize(() => this.isRequesting = false))
         .subscribe(
         result => {         
