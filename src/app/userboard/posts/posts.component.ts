@@ -1,13 +1,18 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material';
 import { Post } from '../models/post';
 import { CheckPost } from '../models/checkpost';
 import { UserboardService } from '../services/userboard.service';
-import {first} from "rxjs/operators";
+import { first } from "rxjs/operators";
 import { finalize } from 'rxjs/operators';
 import { Router } from "@angular/router";
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
+
 import { trigger,style,transition,animate,keyframes,query,stagger } from '@angular/animations';
+import { DeleteDialog } from './dialog-components/delete-dialog';
+import { ShareDialog } from './dialog-components/share-dialog';
+import { UserDetails } from '../models/user.details';
+import { CreateCheckPostDialog } from './dialog-components/createcheckpost-dialog';
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
@@ -44,10 +49,13 @@ export class PostsComponent implements OnInit {
   isRequesting: boolean;
   submitted: boolean = false;
   userPosts: any[];
+  userId: number;
   userCheckPosts: any[];
   userCheckItems: any[];
+  userSharedPosts: any[];
   items: any[];
   searchValue: string;
+  answer: boolean = false;
   values = '';
   constructor(private userboardService: UserboardService,public dialog: MatDialog, private router: Router) { }
   assignCopy(){
@@ -59,21 +67,67 @@ export class PostsComponent implements OnInit {
        item => item.title.toLowerCase().indexOf(value.toLowerCase()) > -1 ||  item.body.toLowerCase().indexOf(value.toLowerCase()) > -1
     )
  } 
-
-  searchClick(){
-    alert(this.searchValue);
-   }
   ngOnInit() {
     this.fetchData();
   }
+  openSharePostDialog(post): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '250px';
+    dialogConfig.panelClass = 'dialogPanel';
+    //dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = { post: post, userCurId: this.userId };
+    dialogConfig.position = {
+      'top': '0',
+      left: '100'
+  };
+    let dialogRef = this.dialog.open(ShareDialog, dialogConfig);
+  }
+  openDialogCreateCheckPost(): void {
+    let dialogRef = this.dialog.open(CreateCheckPostDialog, {
+      height : '450px',
+      panelClass:'dialogPanel'
+    });
+    
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
   openDialogPost(post): void {
-    let dialogRef = this.dialog.open(AppDialog, {
+    let dialogRef = this.dialog.open(DeleteDialog, {
       width: '250px',
       data: { post: post.id }
     });
     
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      if(result === true) this.deletePost(post.id);
+    });
+  }
+  openDialogChekedPost(post): void {
+    let dialogRef = this.dialog.open(DeleteDialog, {
+      width: '250px',
+      data: { post: post.id }
+    });
+    
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if(result === true) {
+        this.submitted = true;
+        this.isRequesting = true;
+        this.errors='';
+      this.userboardService.deleteCheckPost(post.id)
+        .pipe(finalize(() => this.isRequesting = false))
+        .subscribe( result => {         
+          if (result) {
+            console.log('Post was deleted');  
+            this.userCheckPosts = Object.assign([], this.userCheckPosts).filter(
+              item => item.id != post.id
+           )  
+          }
+        },
+        error => this.errors = error);
+      }
     });
   }
   fetchData() {
@@ -89,73 +143,30 @@ export class PostsComponent implements OnInit {
     this.userboardService.getCheckItems().subscribe(( userCheckItems: any[]) => {
       this.userCheckItems =  userCheckItems;
     });
+    this.userboardService.getSharedPosts().subscribe(( userSharedPosts: Post[]) => {
+      this.userSharedPosts =  userSharedPosts;
+    });
+    this.userboardService.getHomeDetails()
+    .subscribe((userDetails: UserDetails) => {
+      this.userId = userDetails.id;
+    });
 }
-  deletePost(post){
+  deletePost(postId){
     this.submitted = true;
     this.isRequesting = true;
     this.errors='';
-      this.userboardService.deletePost(post)
+      this.userboardService.deletePost(postId)
         .pipe(finalize(() => this.isRequesting = false))
-        .subscribe( /*userPosts => {
-          //const item = this.userPosts.find(item => item.id === idPost); 
-           */
-          
-        result => {         
+        .subscribe( result => {         
           if (result) {
             console.log('Post was deleted');  
-            this.router.navigate(['/userboard/home']);
+            this.userPosts = Object.assign([], this.userPosts).filter(
+              item => item.id != postId 
+           )  
           }
-        //     }
-            //const item = this.userPosts.find(item => item.id === idPost);  
-            //this.userPosts=this.userPosts.splice(this.userPosts.indexOf(item)); 
-           
-            //this.userPosts= this.userPosts.splice(i => i !== post);
-            //this.router.navigate(['/userboard/home']);
-            // this.userboardService.getHomePosts().subscribe((userPosts: UserPosts) => {
-            //   this.userPosts = userPosts;  }); 
         },
         error => this.errors = error);
-        //alert(this.userPosts);
-        // //this.userPosts = [new Post()];
-        // this.fetchData();
-        // this.userboardService.getHomePosts().subscribe((userPosts: Post[]) => {
-        //   this.userPosts = userPosts;
-        // });
-        // alert(this.userPosts);
-
-        // const item = this.userPosts.find(item => item.id === post);  
-        // var index = this.userPosts.indexOf(item, 0);
-        // if (index > -1) {
-        //    this.userPosts.splice(index, 1);
-        // }
-        // this.userboardService.getHomePosts().subscribe((userPosts: UserPosts) => {
-        //   this.userPosts = userPosts;  }); 
-        // const item = this.userPosts.find(item => item.id === idPost);  
-        // this.userPosts=this.userPosts.splice(this.userPosts.indexOf(item));      
-        // this.userPosts = this.userPosts.filter(item => item.id != idPost);
-        // this.router.navigate(['/userboard/posts']);   
   }
 }
 
-@Component({
-  selector: 'app-dialog',
-  templateUrl: 'app-dialog.html',
-})
-export class AppDialog {
- 
-  constructor(
-    public dialogRef: MatDialogRef<AppDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private userboardService: UserboardService, private postsComp: PostsComponent,private router: Router) { }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-  onYesClick(post): void {
-    
-   this.postsComp.deletePost(post);
-   
-   this.postsComp.fetchData();
-  
-    this.dialogRef.close();
-  }
-}

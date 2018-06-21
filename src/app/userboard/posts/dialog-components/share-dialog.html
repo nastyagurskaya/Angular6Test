@@ -1,0 +1,16 @@
+<div mat-dialog-content>
+        <p>Choose user whom you want to share post {{data.post.title}}</p>
+      </div>
+      <div>
+            <label>Summary: </label>
+            <select (change)="selectChangeHandler($event)">
+                <option value="0">--All--</option>
+                <option *ngFor="let user of  users" value={{user.id}} >
+                   {{user.username}}
+                </option>
+            </select>
+        </div>
+      <div mat-dialog-actions >
+        <button class="btn btn-light" mat-button (click)="onNoClick()">Cancel</button>
+        <button class="btn btn-light"  mat-button (click)="onYesClick()" cdkFocusInitial>Yes</button>
+      </div>

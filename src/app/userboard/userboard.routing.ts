@@ -4,7 +4,8 @@ import { RouterModule }        from '@angular/router';
 import { HomeComponent }    from './home/home.component'; 
 import { PostsComponent }    from './posts/posts.component'; 
 import { EditComponent }    from './posts/edit/edit.component'; 
-import { CreateComponent }    from './posts/create/create.component'; 
+import { CreateComponent }    from './posts/createpost/create.component'; 
+import { EditCheckPostComponent }    from './posts/editcheckpost/editcheckpost.component'; 
 import { AuthGuard } from '../auth.guard';
 
 export const routing: ModuleWithProviders = RouterModule.forChild([
@@ -21,8 +22,12 @@ export const routing: ModuleWithProviders = RouterModule.forChild([
       component: EditComponent, canActivate: [AuthGuard]
     },
     {
-      path: 'userboard/posts/create',
+      path: 'userboard/posts/createpost',
       component: CreateComponent, canActivate: [AuthGuard]
+    },
+    {
+      path: 'userboard/posts/editcheckpost/:id',
+      component: EditCheckPostComponent, canActivate: [AuthGuard]
     },
     // {
     //   path: 'userboard/home',

@@ -10,8 +10,11 @@ import { MatFormFieldModule, MatDialogModule, MatInputModule } from '@angular/ma
 import { AuthGuard } from '../auth.guard';
 import { PostsComponent } from './posts/posts.component';
 import { EditComponent } from './posts/edit/edit.component';
-import { AppDialog } from './posts/posts.component';
-import { CreateComponent } from './posts/create/create.component';
+import { DeleteDialog } from './posts/dialog-components/delete-dialog';
+import { ShareDialog } from './posts/dialog-components/share-dialog';
+import { CreateCheckPostDialog } from './posts/dialog-components/createcheckpost-dialog';
+import { CreateComponent } from './posts/createpost/create.component';
+import { EditCheckPostComponent } from './posts/editcheckpost/editcheckpost.component';
 
 @NgModule({
   imports: [
@@ -24,11 +27,11 @@ import { CreateComponent } from './posts/create/create.component';
     MatDialogModule,
     ColorPickerModule
   ],
-  declarations: [HomeComponent, PostsComponent, EditComponent,AppDialog, CreateComponent],
+  declarations: [HomeComponent, PostsComponent, EditComponent,DeleteDialog, CreateComponent,  ShareDialog, EditCheckPostComponent, CreateCheckPostDialog],
   exports:      [ColorPickerModule ],
   providers:    [AuthGuard,UserboardService],
   entryComponents: [
-    AppDialog, PostsComponent
+    DeleteDialog, PostsComponent,  ShareDialog, CreateCheckPostDialog
 ]
 })
 export class UserboardModule { }

@@ -5,11 +5,11 @@
           <form #f="ngForm" (ngSubmit)="createPost(f)"  novalidate>
               <div class="form-group">
                   <label for="title">Title </label>
-                  <input placeholder="Title"  name="title"  id="title" ngModel>           
+                  <input placeholder="Title..."  name="title"  id="title" ngModel>           
               </div>
               <div class="form-group">
                   <label for="body">Body </label>
-                  <input  placeholder="Body"  name="body"  id="body" ngModel>
+                  <input  placeholder="Body..."  name="body"  id="body" ngModel>
                   <!-- <input type="text" class="form-control" id="body" placeholder="{{ post.body }}"  value="{{ post.body }}" name="Body" tmFocus ngModel>-->
               </div>
               <div><label for="color">Color </label> <input type="text" name="color"  id="color"  [(colorPicker)]="color" [value]="color" [style.background]="color" ngModel>

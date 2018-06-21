@@ -27,7 +27,9 @@ export class EditComponent implements OnInit {
       data => this.post = data 
     );
   }
-
+  onCancelClick(){
+    this.router.navigate(['/userboard/posts']);     
+  }
   editPost() {
     this.submitted = true;
     this.isRequesting = true;

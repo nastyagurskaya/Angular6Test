@@ -6,11 +6,38 @@ body {
     height: 100vh;
     
 }
+.dialogPanel {
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+}
+input {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    width: 75%;
+    padding: 5px;
+   // float: left;
+    font-size: 16px;
+  }
+  label {
+    margin: 0;
+    padding: 10px;
+    font-size: 16px;
+  }
+.btn {
+    .btn-light{
+
+        padding: 15px;
+    }
+  }
+ .checked {
+    color: rgb(0, 0, 0);
+    text-decoration: line-through;
+  }
 #container {
    display: grid;
    grid-template-columns: 70px auto;
    height: 100%;
-
    #content {
        padding: 30px 50px;
        a {
@@ -26,9 +53,9 @@ body {
            li {
                background: #fff;
                border-radius: 8px;
-               padding: 20px;
+               padding: 10px;
                margin-bottom: 8px;
-       
+               font-size: 1.1em;
                a {
                    font-size: 1.5em;
                    text-decoration: none;

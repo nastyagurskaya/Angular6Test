@@ -3,12 +3,12 @@
       <h2>Edit {{ post.Title }}</h2>
     </div>
   </div> -->
-  <h2>{{ post?.title | uppercase }} Details</h2>
+  <h2><strong>{{ post?.title | uppercase }} Details</strong></h2>
 <!-- <div><span>Id: </span>{{post?.id}}</div> -->
   <div class="row">
       <div class="col-md-6">
           <form #f="ngForm" (ngSubmit)="editPost()"  novalidate>
-                <div><span>Id: </span>{{post?.id}}</div>
+                <div><label for="id">Id:</label> {{post?.id}}</div>
               <div class="form-group">
                   <label for="title">Title </label>
                   <input *ngIf="post" [(ngModel)]="post.title" placeholder="{{post.title}}" [ngModelOptions]="{standalone: true}">           
@@ -22,6 +22,7 @@
                 <input *ngIf="post" type="text" name="color"  id="post.color" value="{{post.color}}" [(colorPicker)]="post.color"  [style.background]="post.color" ngModel ></div>
               <div class="form-group">
                   <button type="submit" class="btn btn-light" [disabled]="f.invalid || isRequesting">Update</button>
+                  <button class="btn btn-light"  style="margin:10px" mat-button (click)="onCancelClick()">Cancel</button>
                   <app-spinner> [isRunning]="isRequesting"></app-spinner> 
               </div>
               <div *ngIf="errors" class="alert alert-danger" role="alert">

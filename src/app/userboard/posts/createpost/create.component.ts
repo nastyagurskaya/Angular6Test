@@ -13,7 +13,6 @@ import { finalize } from 'rxjs/operators';
 export class CreateComponent implements OnInit {
 
   post: Post;
-  brandNew: boolean;
   errors: string;
   isRequesting: boolean;
   submitted: boolean = false;
