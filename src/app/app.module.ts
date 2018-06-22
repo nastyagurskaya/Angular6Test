@@ -4,9 +4,6 @@ import { AuthGuard } from '../app/auth.guard';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { PostsComponent } from './posts/posts.component';
-import { UsersComponent } from './users/users.component';
-import { DetailsComponent } from './details/details.component';
 import { HttpClientModule } from '@angular/common/http';
 import { Http, HttpModule, XHRBackend } from '@angular/http';
 import { AuthenticateXHRBackend } from './authenticate-xhr.backend';
@@ -20,10 +17,7 @@ import {RegistrationFormComponent} from './account/registration-form/registratio
 @NgModule({
   declarations: [
     AppComponent,
-    SidebarComponent,
-    PostsComponent,
-    UsersComponent,
-    DetailsComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
