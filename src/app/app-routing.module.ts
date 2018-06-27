@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { RegistrationFormComponent } from './account/registration-form/registration-form.component';
 import { AuthGuard } from '../app/auth.guard';
 import { HomeComponent } from './userboard/home/home.component';
+
 const routes: Routes = [
 
 {
