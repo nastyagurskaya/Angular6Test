@@ -72,21 +72,16 @@ export class PostsComponent implements OnInit {
   }
   openSharePostDialog(post): void {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '250px';
-    dialogConfig.panelClass = 'dialogPanel';
-    //dialogConfig.disableClose = false;
-    dialogConfig.autoFocus = true;
+
+    dialogConfig.panelClass = 'dialogSharePanel';
+
     dialogConfig.data = { post: post, userCurId: this.userId };
-    dialogConfig.position = {
-      'top': '0',
-      left: '100'
-  };
+
     let dialogRef = this.dialog.open(ShareDialog, dialogConfig);
   }
   openDialogCreateCheckPost(): void {
     let dialogRef = this.dialog.open(CreateCheckPostDialog, {
-      height : '450px',
-      panelClass:'dialogPanel'
+      panelClass:'dialogCreatePanel',
     });
     
     dialogRef.afterClosed().subscribe(result => {
@@ -95,8 +90,8 @@ export class PostsComponent implements OnInit {
   }
   openDialogPost(post): void {
     let dialogRef = this.dialog.open(DeleteDialog, {
-      width: '250px',
-      data: { post: post.id }
+      panelClass:'dialogDeletePanel',
+      data: { post: post }
     });
     
     dialogRef.afterClosed().subscribe(result => {
@@ -106,8 +101,8 @@ export class PostsComponent implements OnInit {
   }
   openDialogChekedPost(post): void {
     let dialogRef = this.dialog.open(DeleteDialog, {
-      width: '250px',
-      data: { post: post.id }
+      panelClass:'dialogDeletePanel',
+      data: { post: post }
     });
     
     dialogRef.afterClosed().subscribe(result => {

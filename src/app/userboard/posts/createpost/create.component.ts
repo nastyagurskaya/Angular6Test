@@ -22,7 +22,9 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  onCancelClick(){
+    this.router.navigate(['/userboard/posts']);     
+  }
   createPost({ value }: { value: Post}) {
     this.submitted = true;
     this.isRequesting = true;
