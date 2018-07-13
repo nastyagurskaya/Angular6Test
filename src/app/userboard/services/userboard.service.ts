@@ -199,7 +199,7 @@ createCheckItem( CheckListPostId,body): Observable<number> {
   headers.append('Authorization', `Bearer ${authToken}`);
   let checked = false;
   let bodyP = JSON.stringify({  CheckListPostId, body, checked });
-  return this.http.post(this.baseUrl + "/checkposts/create/checklistitem", bodyP, {headers}).pipe(map(response => response.json()),
+  return this.http.post(this.baseUrl + "/checkposts/checklistitem/create", bodyP, {headers}).pipe(map(response => response.json()),
   catchError(this.handleError));
 }
 }
